@@ -5,7 +5,7 @@ do
     if [ -f "$file" ]; then
         extension="${file##*.}"
 
-        case ${extension} in
+        case ${extension,,} in
     jpg|jpeg|png|gif)
         destination="images"
 
