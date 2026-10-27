@@ -23,6 +23,12 @@ if [ ! -d "$1" ]; then
     exit 1
 fi
 
+images_count=0
+documents_count=0
+music_count=0
+archives_count=0
+others_count=0
+
 for file in "$1"/*
 do
     # 通常のファイル以外はスキップする / 일반 파일이 아니면 건너뛰기
@@ -45,18 +51,23 @@ do
     case ${extension,,} in
         jpg|jpeg|png|gif)
             destination="images"
+            images_count=$((images_count + 1))
             ;;
         pdf|txt|md|docx)
             destination="documents"
+            documents_count=$((documents_count + 1))
             ;;
         mp3|wav)
             destination="music"
+            music_count=$((music_count + 1))
             ;;
         zip|gz)
             destination="archives"
+            archives_count=$((archives_count + 1))
             ;;
         *)
             destination="others"
+            others_count=$((others_count + 1))
             ;;
     esac
 
@@ -98,12 +109,18 @@ do
                 echo  "${filename} -> ${destination}/$filenameWithCount"
                 break
             fi
-
         done
-   
+
     # 同名のファイルが存在しない場合 / 같은 이름의 파일이 존재하지 않는 경우
     else 
         # ファイルをそのまま移動する / 파일을 그대로 이동한다
         mv "$file" "$1"/${destination}/
-    fi
+    fi   
 done
+
+echo "----
+images: ${images_count} 件
+documents: ${documents_count} 件
+music: ${music_count} 件
+archives: ${archives_count} 件
+others: ${others_count} 件"
