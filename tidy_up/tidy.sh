@@ -1,5 +1,16 @@
 #!/bin/bash
 
+# 引数が2つ指定された場合のオプション処理 / 인수가 2개인 경우 옵션 처리
+if [ $# -eq 2 ]; then 
+    if [ "$1" = "--dry-run" ]; then
+        command_option="$1"
+        shift 1
+    else
+        echo "エラー: 引数を2つ指定する場合、--dry-run オプションのみ使用できます。" >&2
+        exit 1
+    fi
+fi
+
 # 引数が指定されなかった場合
 if [ -z "$1" ]; then
     echo "使い方: ./tidy.sh ディレクトリ" >&2
@@ -49,9 +60,15 @@ do
             ;;
     esac
 
+    filename="${file##*/}"
+
+    if [ "$command_option" = "--dry-run" ]; then
+        echo "[dry-run] ${filename} -> ${destination}/"
+        continue
+    fi
+
     # 分類先のディレクトリを作成する / 분류 대상 디렉터리 생성
     mkdir -p "$1"/${destination}
-    filename="${file##*/}"
 
     # 同名のファイルが存在するか確認する / 같은 이름의 파일이 존재하는지 확인
     if [ -e "$1"/${destination}/${filename} ]; then
