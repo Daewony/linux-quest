@@ -104,7 +104,7 @@ done
 
 - CPU を大量に使用していたプロセスは `penguin_calc.sh`（PID 40）で、CPU 使用率は約 100% でした。
 - `penguin_logger.sh`（PID 41）は CPU 使用率がほぼ 0% でしたが、`debug.log` にログを書き込むスクリプトでした。
-- `debug.log` がディスク容量の大部分（約 300 MiB）を占めていました。
+- `debug.log` のファイルサイズは約300MiBで、/root/runaway ディレクトリの使用量の大部分を占めていました。
 - `penguin_logger.sh` は、ログの使用量が 300 MiB 未満のときにログを追記します。300 MiB 以上になると追記はしなくなりますが、`while true` と `sleep 1` によりプロセス自体は動き続けます。
 
 ## ステップ2：プロセスを止める
