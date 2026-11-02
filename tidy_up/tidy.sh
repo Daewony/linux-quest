@@ -94,7 +94,7 @@ do
         while true
         do
             # 拡張子の有無に応じて新しいファイル名を生成する / 확장자 유무에 따라 새로운 파일명 생성
-            if [ "$filename" == *.* ]; then
+            if [[ "$filename" == *.* ]]; then
                 filename_with_count="${name}_${count}.${extension}"
             else
                 filename_with_count="${name}_${count}"
