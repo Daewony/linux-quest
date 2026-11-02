@@ -82,7 +82,7 @@ do
     mkdir -p "$1"/${destination}
 
     # 同名のファイルが存在するか確認する / 같은 이름의 파일이 존재하는지 확인
-    if [ -e "$1"/${destination}/${filename} ]; then
+    if [ -e "$1/${destination}/${filename}" ]; then
         # 同名のファイルが存在する場合 / 같은 이름의 파일이 존재하는 경우
             # ファイル名に連番を付けて移動する / 파일명에 일련번호를 붙여 이동한다
             # 変更後のファイル名と移動先を表示する / 변경 후의 파일명과 이동할 위치를 표시한다
@@ -94,19 +94,19 @@ do
         while true
         do
             # 拡張子の有無に応じて新しいファイル名を生成する / 확장자 유무에 따라 새로운 파일명 생성
-            if [[ "$filename" == *.* ]]; then
-                filenameWithCount="${name}_${count}.${extension}"
+            if [ "$filename" == *.* ]; then
+                filename_with_count="${name}_${count}.${extension}"
             else
-                filenameWithCount="${name}_${count}"
+                filename_with_count="${name}_${count}"
             fi
 
-            if [ -e "$1"/${destination}/${filenameWithCount} ]; then
                 # 使用可能なファイル名が見つかるまで番号を増やす / 사용 가능한 파일명을 찾을 때까지 번호 증가
+            if [ -e "$1/${destination}/${filename_with_count}" ]; then
                 count=$((count + 1))
             else
                 # ファイル名を変更して移動する / 파일명을 변경하여 이동
-                mv "$file" "$1/${destination}/$filenameWithCount"
-                echo  "${filename} -> ${destination}/$filenameWithCount"
+                mv "$file" "$1/${destination}/$filename_with_count"
+                echo  "${filename} -> ${destination}/$filename_with_count"
                 break
             fi
         done
